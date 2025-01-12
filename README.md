@@ -19,3 +19,5 @@ This repository contains a reformatted version of that work. In accordance with 
 - License: CC BY 4.0
 
 This derivative work is also licensed under CC BY 4.0.
+
+This book is composed with the [SILE](https://github.com/sile-typesetter/sile) typesetting system and the [re·sil·ient](https://github.com/Omikhleia/resilient.sile) collection of classes & packages.
