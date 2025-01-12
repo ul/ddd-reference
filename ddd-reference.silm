@@ -1,0 +1,27 @@
+masterfile: 1.0
+metadata:
+  title: Domain-Driven Design Reference
+  subtitle: Definitions and Pattern Summaries
+  authors: Eric Evans
+  url: https://github.com/ul/ddd-reference
+  copyright: © 2015, Eric Evans.
+  legal: |
+    This work is licensed under the Creative Commons Attribution 4.0 International License.
+
+    To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
+book:
+  enabled: true
+sile:
+  packages:
+    - fancytoc
+chapters:
+  - frontmatter.sil
+  - 00-acknowledgements.dj
+  - 01-definitions.dj
+  - 02-pattern-language-overview.sil
+  - 03-putting-the-model-to-work.dj
+  - 04-building-blocks-of-a-model-driven-design.dj
+  - 05-supple-design.dj
+  - 06-context-mapping-for-strategic-design.dj
+  - 07-distillation-for-strategic-design.dj
+  - 08-large-scale-structure-for-strategic-design.dj

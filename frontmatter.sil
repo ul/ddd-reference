@@ -1,0 +1,5 @@
+\set-counter[id=folio,value=4,display=roman]
+
+\chapter[numbering=false, toc=false]{Contents}
+\noheaders
+\fancytableofcontents
