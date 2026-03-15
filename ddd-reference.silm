@@ -13,7 +13,9 @@ book:
   enabled: true
 sile:
   packages:
-    - fancytoc
+    - resilient.fancytoc
+  options:
+    papersize: a4
 chapters:
   - frontmatter.sil
   - 00-acknowledgements.dj

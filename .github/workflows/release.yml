@@ -1,0 +1,44 @@
+name: Build and Release PDF
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install SILE
+        run: |
+          sudo add-apt-repository -y ppa:sile-typesetter/sile
+          sudo apt-get update
+          sudo apt-get install -y sile luarocks fonts-sil-gentiumplus
+
+      - name: Install dependencies
+        run: luarocks --lua-version $(sile -q <<< SILE.lua_version) --tree lua_modules install resilient.sile 3.4.0
+
+      - name: Build PDF
+        # Twice as label references change after the first run.
+        run: |
+          sile --luarocks-tree lua_modules -u inputters.silm ddd-reference.silm
+          sile --luarocks-tree lua_modules -u inputters.silm ddd-reference.silm
+
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ddd-reference
+          path: ddd-reference.pdf
+
+      - name: Update latest release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest Build
+          body: Built from ${{ github.sha }}
+          files: ddd-reference.pdf
+          make_latest: true
