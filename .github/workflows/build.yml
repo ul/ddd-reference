@@ -1,14 +1,12 @@
-name: Build and Release PDF
+name: Build PDF
 
 on:
   push:
-    branches: [main]
-
-permissions:
-  contents: write
+    branches-ignore: [main]
+  pull_request:
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -27,7 +25,6 @@ jobs:
         run: luarocks --lua-version $(sile -q <<< SILE.lua_version) --tree lua_modules install resilient.sile ${{ steps.resilient.outputs.version }}
 
       - name: Build PDF
-        # Twice as label references change after the first run.
         run: |
           sile --luarocks-tree lua_modules -u inputters.silm ddd-reference.silm
           sile --luarocks-tree lua_modules -u inputters.silm ddd-reference.silm
@@ -37,12 +34,3 @@ jobs:
         with:
           name: ddd-reference
           path: ddd-reference.pdf
-
-      - name: Update latest release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: latest
-          name: Latest Build
-          body: Built from ${{ github.sha }}
-          files: ddd-reference.pdf
-          make_latest: true
