@@ -11,23 +11,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install SILE
-        run: |
-          sudo add-apt-repository -y ppa:sile-typesetter/sile
-          sudo apt-get update
-          sudo apt-get install -y sile luarocks fonts-sil-gentiumplus
-
-      - name: Read resilient version
-        id: resilient
-        run: echo "version=$(cat .resilient-version | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Install dependencies
-        run: luarocks --lua-version $(sile -q <<< SILE.lua_version) --tree lua_modules install resilient.sile ${{ steps.resilient.outputs.version }}
+        run: nix-shell --run true
 
       - name: Build PDF
+        # Twice as label references change after the first run.
         run: |
-          sile --luarocks-tree lua_modules -u inputters.silm ddd-reference.silm
-          sile --luarocks-tree lua_modules -u inputters.silm ddd-reference.silm
+          nix-shell --run build
+          nix-shell --run build
 
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v6
