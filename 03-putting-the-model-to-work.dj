@@ -1,7 +1,5 @@
 # Putting the Model to Work
 
-`\set-counter[id=folio,value=1,display=arabic]`{=sile}
-
 [^:therefore:]: *∴*{custom-style="center"}
 
 Domain-Driven Design is an approach to the development of complex software in
